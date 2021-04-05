@@ -156,5 +156,28 @@ miaolexusfeedback::DATABASE=>
 
 ## sending email using mailtrap.io. You can find emails.
 
+## If you got "500 Internal Error", it mostly is because username/password for database have been deleted. You need add them back.
+```
+ENV = 'prod'
+
+if ENV == 'dev':
+    app.debug = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres@127.0.0.1/lexus'
+else:
+    app.debug = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://<Username>:<password>@$$$$$$$.amazonaws.com:5432/d6epceg0d6vbe5'
+```
+
+
+## If sending email failed, you need add username/password back to send_email.py
+```
+    login = ''
+    password = ''
+```
+
+
 ## Reference: 
 https://www.youtube.com/watch?v=w25ea_I89iM&t=2470s
+
+## Reference #2:
+My Email: rbmiao
