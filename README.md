@@ -1,4 +1,4 @@
-# Heroku is kinda SaaS provider
+# Heroku is a SaaS provider. 
 
 # Python Feedback App
 
