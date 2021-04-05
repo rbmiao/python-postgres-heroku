@@ -47,10 +47,114 @@ pipenv install
 python app.py
 ```
 
+## Sending emails uses mailtrap.io. 
+
+## Online postgres database need to be created use 
+```
+(python_feedback_app) bash-3.2$ heroku run python
+Running python on ⬢ miaolexusfeedback... up, run.9076 (Free)
+Python 3.9.2 (default, Feb 19 2021, 15:57:12)
+[GCC 9.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>> from  app import db
+>>> db.create_all()
+>>> exit()
+(python_feedback_app) bash-3.2$
+```
+
+## git push files to heroku. Heroku starts building, installing, launching immediately
+```
+(python_feedback_app) bash-3.2$ git push heroku master
+Enumerating objects: 23, done.
+Counting objects: 100% (23/23), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (19/19), done.
+Writing objects: 100% (23/23), 1.23 MiB | 1006.00 KiB/s, done.
+Total 23 (delta 2), reused 0 (delta 0)
+remote: Compressing source files... done.
+remote: Building source:
+remote:
+remote: -----> Building on the Heroku-20 stack
+remote: -----> Determining which buildpack to use for this app
+remote: -----> Python app detected
+remote: -----> Installing python-3.9.2
+remote: -----> Installing pip 20.1.1, setuptools 47.1.1 and wheel 0.34.2
+remote: -----> Installing dependencies with Pipenv 2020.11.15
+remote:        Installing dependencies from Pipfile.lock (d3fb3d)...
+remote: -----> Installing SQLite3
+remote: -----> Discovering process types
+remote:        Procfile declares types -> web
+remote:
+remote: -----> Compressing...
+remote:        Done: 70.9M
+remote: -----> Launching...
+remote:        Released v5
+remote:        https://miaolexusfeedback.herokuapp.com/ deployed to Heroku
+remote:
+remote: Verifying deploy... done.
+To https://git.heroku.com/miaolexusfeedback.git
+ * [new branch]      master -> master
+(python_feedback_app) bash-3.2$
+```
+
+
 ### Heroku Deployment Steps
 
 https://gist.github.com/bradtraversy/0029d655269c8a972df726ed0ac56b88
 
+
+
+## Create online heroku database from local. (you must login to heroku first)
+```
+(python_feedback_app) bash-3.2$ heroku run python
+Running python on ⬢ miaolexusfeedback... up, run.9076 (Free)
+Python 3.9.2 (default, Feb 19 2021, 15:57:12)
+[GCC 9.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>> from  app import db
+>>> db.create_all()
+>>> exit()
+(python_feedback_app) bash-3.2$
+```
+
+## Before running app against database, login to online database to check:
+```
+(python_feedback_app) bash-3.2$ heroku pg:psql --app miaolexusfeedback
+--> Connecting to postgresql-trapezoidal-49352
+psql (13.1, server 13.2 (Ubuntu 13.2-1.pgdg20.04+1))
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
+Type "help" for help.
+
+miaolexusfeedback::DATABASE=> \d
+                  List of relations
+ Schema |      Name       |   Type   |     Owner
+--------+-----------------+----------+----------------
+ public | feedback        | table    | qzftoienbdxxxl
+ public | feedback_id_seq | sequence | qzftoienbdxxxl
+(2 rows)
+
+miaolexusfeedback::DATABASE=> select * from feedback;
+ id | customer | dealer | rating | comments
+----+----------+--------+--------+----------
+(0 rows)
+```
+
+## After running app on heroku, check database records from local:
+```
+
+miaolexusfeedback::DATABASE=> select * from feedback;
+ id | customer  |    dealer     | rating |      comments
+----+-----------+---------------+--------+--------------------
+  1 | Worcester | Tom Smith     |     10 | He is very helpful
+  2 | Miao      | Karen Swanson |      5 | He is pushy
+(2 rows)
+
+miaolexusfeedback::DATABASE=>
+```
+
+## sending email using mailtrap.io. You can find emails.
 
 ## Reference: 
 https://www.youtube.com/watch?v=w25ea_I89iM&t=2470s
